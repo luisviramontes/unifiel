@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class autoridadesCertController extends Controller
 {
@@ -16,6 +17,11 @@ class autoridadesCertController extends Controller
      */
     public function index()
     {
+        $autoridades=DB::table('autoridades_cert')->join('users','users.id','=','autoridades_cert.id_user')
+        ->select('users.name','users.apellido_p','users.apellido_m','users.razon_social','autoridades_cert.*')
+        ->get();
+
+        return view('autoridades_cert.index',['autoridades'=>$autoridades]);
         //
     }
 

@@ -29,14 +29,19 @@
     {!!Html::style('assets/vendor/quill/quill.snow.css')!!}
     {!!Html::style('assets/vendor/quill/quill.bubble.css')!!}
     {!!Html::style('assets/vendor/remixicon/remixicon.css')!!}
-    {!!Html::style('assets/vendor/simple-datatables/style.css')!!}
     <!-- Template Main CSS File -->
     {!!Html::style('assets/css/style.css')!!}
     {!!Html::style('assets/css/icons.min.css')!!}
     {!!Html::style('assets/css/app.min.css')!!}
-
+     <!-- ARCHIVOS -->
     {!!Html::style('assets/libs/dropify/dropify.min.css')!!}
+     <!-- DATATABLE -->
 
+    <link rel="stylesheet" type="text/css"
+                        href="https://cdn.datatables.net/v/dt/dt-1.11.5/r-2.2.9/sc-2.0.5/datatables.min.css" />
+
+                    <script type="text/javascript"
+                        src="https://cdn.datatables.net/v/dt/dt-1.11.5/r-2.2.9/sc-2.0.5/datatables.min.js"></script>
 
     <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.2
@@ -554,7 +559,6 @@
     {!!Html::script('assets/vendor/chart.js/chart.min.js')!!}
     {!!Html::script('assets/vendor/echarts/echarts.min.js')!!}
     {!!Html::script('assets/vendor/quill/quill.min.js')!!}
-    {!!Html::script('assets/vendor/simple-datatables/simple-datatables.js')!!}
     {!!Html::script('assets/vendor/tinymce/tinymce.min.js')!!}
     {!!Html::script('assets/vendor/php-email-form/validate.js')!!}
 
@@ -568,6 +572,7 @@
     {!!Html::script('assets/libs/dropify/dropify.min.js')!!}
 
 
+ 
 
     @yield('javascript')
 

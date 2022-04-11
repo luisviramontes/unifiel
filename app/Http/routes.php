@@ -32,3 +32,6 @@ Route::resource('documentacion', 'documentacionUsuariosController');
 //firma electronica 
 Route::resource('firma_electronica', 'firmaElectronicaController');
 Route::get('autofirmado','firmaElectronicaController@autofirmado');
+
+//autoridades_certificadoras
+Route::resource('autoridades_certificadoras', 'autoridadesCertController');
