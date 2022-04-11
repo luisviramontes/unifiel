@@ -37,10 +37,10 @@ class firmaElectronicaController extends Controller
         "countryName" => "MX",
         "stateOrProvinceName" => "Zacatecas",
         "localityName" => "Guadalupe",
-        "organizationName" => "UNIFIEL",
+        "organizationName" => "unifiel.org.mx",
         "organizationalUnitName" => "UNIFIEL",
         "commonName" => "UNIFIEL",
-        "emailAddress" => "admin@unifiel.org.mx"
+        "emailAddress" => "Admin@unifiel.org.mx"
       );
       $config = array(
         'config' => 'ssl/openssl.cnf',
@@ -52,17 +52,17 @@ class firmaElectronicaController extends Controller
       
       $privkey  = openssl_pkey_new($config);
       $csr = openssl_csr_new($dn, $privkey );    
-      $req_cert = openssl_csr_sign($csr, null, $privkey , 730);
+      $req_cert = openssl_csr_sign($csr, null, $privkey , 730,array('digest_alg'=>'sha256'));
       openssl_csr_export($csr, $csrout) and var_dump($csrout);
       openssl_x509_export($req_cert, $certout) and var_dump($certout);
       openssl_pkey_export($privkey, $pkeyout, "Tecno1$1$1") and var_dump($pkeyout);
 
-      openssl_x509_export_to_file($certout, "ssl/cert/admin@unifiel.org.mx.cer");
-      openssl_pkey_export_to_file($pkeyout, "ssl/key/admin@unifiel.org.mx.key");
+      openssl_x509_export_to_file($certout, "ssl/cert/Admin@unifiel.org.mx.cer");
+      openssl_pkey_export_to_file($pkeyout, "ssl/key/Admin@unifiel.org.mx.key");
 
       $a_key = openssl_pkey_get_details($pkeyout);
       $ClavePublica = $a_key["key"];
-      file_put_contents("ssl/key/admin@unifiel.org.mx-Pub.key", $ClavePublica);
+      file_put_contents("ssl/key/Admin@unifiel.org.mx-Pub.key", $ClavePublica);
 
 /*
       var_dump($req_key);
