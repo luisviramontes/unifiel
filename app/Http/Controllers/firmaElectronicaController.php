@@ -61,7 +61,7 @@ class firmaElectronicaController extends Controller
       openssl_pkey_export_to_file($pkeyout, "ssl/key/Admin@unifiel.org.mx.key");
 
       $pub_key = openssl_pkey_get_public(file_get_contents('ssl/cert/Admin@unifiel.org.mx.cer'));
-      $keyData = openssl_pkey_get_details($pub_key);
+      $keyData = openssl_pkey_get_details($privkey);
       file_put_contents('ssl/key/Admin@unifiel.org.mx.key.pub', $keyData['key']);
 
       /*
