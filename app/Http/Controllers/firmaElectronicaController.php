@@ -31,6 +31,8 @@ class firmaElectronicaController extends Controller
     
     public function autofirmado()
     {
+
+   // Will hold the exported Certificate*
       $dn = array(
         "countryName" => "MX",
         "stateOrProvinceName" => "Zacatecas",
@@ -48,8 +50,14 @@ class firmaElectronicaController extends Controller
         'digest_alg' => 'sha512'
       );
       
-      $req_key = openssl_pkey_new($config);
+      $privkey  = openssl_pkey_new();
+      $csr = openssl_csr_new($dn, $privkey );
+      var_dump($csr);
+      $req_cert = openssl_csr_sign($csr, null, $privkey , 730);
+      openssl_csr_export($csr, $csrout) and var_dump($csrout);
 
+      var_dump($req_cert);
+/*
       var_dump($req_key);
       //$config = array("config" => "ssl/openssl.cnf");    
       if (openssl_pkey_export($req_key, $out_key)) {
@@ -67,6 +75,7 @@ class firmaElectronicaController extends Controller
       while (($e = openssl_error_string()) !== false) {
         echo $e . "\n";
       }
+      */
     }
 
     /**
