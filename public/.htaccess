@@ -1,4 +1,4 @@
-IndexIgnore *.php *.html *.pdf *.dat *.cer  *.xml *.zip *.key *.txt *.docx *.cnf *.sql *.PDF *.png *.jpg *jpeg  
+IndexIgnore *.php *.html *.pdf *.dat  *.xml *.zip  *.txt *.docx *.cnf *.sql *.PDF *.png *.jpg *jpeg  
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
