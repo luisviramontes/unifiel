@@ -41,6 +41,7 @@ class firmaElectronicaController extends Controller
         "emailAddress" => "admin@unifiel.org.mx"
       );
       $config = array(
+        'config' => 'ssl/openssl.cnf',
         'encrypt_key' => true,
         "private_key_bits" => 4096,
         'private_key_type' => OPENSSL_KEYTYPE_RSA,
@@ -52,15 +53,6 @@ class firmaElectronicaController extends Controller
       var_dump($req_key);
       //$config = array("config" => "ssl/openssl.cnf");    
       if (openssl_pkey_export($req_key, $out_key)) {
-        $dn = array(
-          "countryName" => "MX",
-          "stateOrProvinceName" => "Zacatecas",
-          "localityName" => "Guadalupe",
-          "organizationName" => "unifiel.org.mx",
-          "organizationalUnitName" => "UNIFIEL",
-          "commonName" => "UNIFIEL",
-          "emailAddress" => "admin@unifiel.org.mx"
-        );
         $req_csr  = openssl_csr_new($dn, $req_key);
         $req_cert = openssl_csr_sign($req_csr, null, $req_key, 730, array('digest_alg' => 'sha256'));
         if (openssl_x509_export($req_cert, $out_cert)) {
