@@ -54,15 +54,22 @@ class firmaElectronicaController extends Controller
       $csr = openssl_csr_new($dn, $privkey );    
       $req_cert = openssl_csr_sign($csr, null, $privkey , 730,array('digest_alg'=>'sha256'));
       openssl_csr_export($csr, $csrout) and var_dump($csrout);
-      openssl_x509_export($req_cert, $certout) and var_dump($certout);
-      openssl_pkey_export($privkey, $pkeyout) and var_dump($pkeyout);
+      openssl_x509_export($req_cert, $certout);
+      openssl_pkey_export($privkey, $pkeyout);
 
       openssl_x509_export_to_file($certout, "ssl/cert/Admin@unifiel.org.mx.cer");
       openssl_pkey_export_to_file($pkeyout, "ssl/key/Admin@unifiel.org.mx.key");
 
+      $pub_key = openssl_pkey_get_public(file_get_contents('ssl/cert/Admin@unifiel.org.mx.cer'));
+      $keyData = openssl_pkey_get_details($pub_key);
+      file_put_contents('ssl/key/Admin@unifiel.org.mx.key.pub', $keyData['key']);
+
+      /*
       $a_key = openssl_pkey_get_details($pkeyout);
+      var_dump($a_key);
       $ClavePublica = $a_key["key"];
       file_put_contents("ssl/key/Admin@unifiel.org.mx-Pub.key", $ClavePublica);
+      */
 
 /*
       var_dump($req_key);
