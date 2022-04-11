@@ -40,7 +40,8 @@ class firmaElectronicaController extends Controller
         "commonName" => "UNIFIEL",
         "emailAddress" => "admin@unifiel.org.mx"
       );
-      $config = array(      
+      $config = array(
+        'config' => 'ssl/openssl.cnf',
         'encrypt_key' => true,
         "private_key_bits" => 4096,
         'private_key_type' => OPENSSL_KEYTYPE_RSA,
@@ -48,6 +49,8 @@ class firmaElectronicaController extends Controller
       );
       
       $req_key = openssl_pkey_new($config);
+
+      var_dupm($req_key);
       //$config = array("config" => "ssl/openssl.cnf");    
       if (openssl_pkey_export($req_key, $out_key)) {
         $dn = array(
