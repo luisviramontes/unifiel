@@ -55,7 +55,7 @@ class firmaElectronicaController extends Controller
       $req_cert = openssl_csr_sign($csr, null, $privkey , 730,array('digest_alg'=>'sha256'));
       openssl_csr_export($csr, $csrout) and var_dump($csrout);
       openssl_x509_export($req_cert, $certout) and var_dump($certout);
-      openssl_pkey_export($privkey, $pkeyout, "Tecno1$1$1") and var_dump($pkeyout);
+      openssl_pkey_export($privkey, $pkeyout) and var_dump($pkeyout);
 
       openssl_x509_export_to_file($certout, "ssl/cert/Admin@unifiel.org.mx.cer");
       openssl_pkey_export_to_file($pkeyout, "ssl/key/Admin@unifiel.org.mx.key");
