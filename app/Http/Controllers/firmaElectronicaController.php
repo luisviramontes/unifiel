@@ -31,6 +31,8 @@ class firmaElectronicaController extends Controller
     
     public function autofirmado()
     {
+
+   // Will hold the exported Certificate*
       $dn = array(
         "countryName" => "MX",
         "stateOrProvinceName" => "Zacatecas",
@@ -41,6 +43,7 @@ class firmaElectronicaController extends Controller
         "emailAddress" => "admin@unifiel.org.mx"
       );
       $config = array(
+        'config' =>'ssl/openssl.cnf',
         'encrypt_key' => true,
         "private_key_bits" => 4096,
         'private_key_type' => OPENSSL_KEYTYPE_RSA,
