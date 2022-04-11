@@ -40,8 +40,7 @@ class firmaElectronicaController extends Controller
         "commonName" => "UNIFIEL",
         "emailAddress" => "admin@unifiel.org.mx"
       );
-      $config = array(
-        'config' => 'ssl/openssl.cnf',
+      $config = array(      
         'encrypt_key' => true,
         "private_key_bits" => 4096,
         'private_key_type' => OPENSSL_KEYTYPE_RSA,
