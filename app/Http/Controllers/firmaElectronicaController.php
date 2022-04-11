@@ -63,11 +63,11 @@ class firmaElectronicaController extends Controller
         $req_csr  = openssl_csr_new($dn, $req_key);
         $req_cert = openssl_csr_sign($req_csr, null, $req_key, 730, array('digest_alg' => 'sha256'));
         if (openssl_x509_export($req_cert, $out_cert)) {
-          openssl_x509_export_to_file($out_cert, "ssl/cert/admin@sitzac.org.mx.cer");
-          openssl_pkey_export_to_file($out_key, "ssl/key/admin@sitzac.org.mx.key");
+          openssl_x509_export_to_file($out_cert, "ssl/cert/admin@unifiel.org.mx.cer");
+          openssl_pkey_export_to_file($out_key, "ssl/key/admin@unifiel.org.mx.key");
           $a_key = openssl_pkey_get_details($req_key);
           $ClavePublica = $a_key["key"];
-          file_put_contents("ssl/key/admin@sitzac.org.mx-Pub.key", $ClavePublica);
+          file_put_contents("ssl/key/admin@unifiel.org.mx-Pub.key", $ClavePublica);
         }
       }
       // Mostrar cualquier error que ocurra
