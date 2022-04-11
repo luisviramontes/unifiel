@@ -50,7 +50,7 @@ class firmaElectronicaController extends Controller
       
       $req_key = openssl_pkey_new($config);
 
-      var_dupm($req_key);
+      var_dump($req_key);
       //$config = array("config" => "ssl/openssl.cnf");    
       if (openssl_pkey_export($req_key, $out_key)) {
         $dn = array(
