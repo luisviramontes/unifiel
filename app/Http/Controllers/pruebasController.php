@@ -80,7 +80,7 @@ class pruebasController extends Controller
   
         $name_zip = "Llaves.zip";
         //$filename = 'COMPRIMIDOS/' . $name_zip;
-        $filename = "pruebas/Llaves.zip.";
+        $filename = "pruebas/Llaves_key_public.zip.";
 
         if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {  
         // Crear la clave pública y privada
@@ -118,7 +118,7 @@ class pruebasController extends Controller
         return Redirect::to('welcome');
         }else {
           echo 'Error creando ' . $filename;
-          return Redirect::to('welcome')->with('errors', 'Error al crear el zip ');
+         // return Redirect::to('welcome')->with('errors', 'Error al crear el zip ');
         }
        
         
