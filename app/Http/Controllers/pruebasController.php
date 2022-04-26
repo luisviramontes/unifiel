@@ -133,7 +133,8 @@ class pruebasController extends Controller
 
     public function cifrar_msj(request $request){
         $data = $request->get('mensaje');  
-        $pubKey = $request->file('llave');          
+        $pubKey = $request->file('llave');      
+        $pubKey=file_get_contents($pubKey);
         // Cifra los datos en la variable $encrypted usando la clave pública
         openssl_public_encrypt($data, $encrypted, $pubKey);
 
@@ -146,6 +147,180 @@ class pruebasController extends Controller
           readfile('pruebas/mensaje_encriptado.txt');
           // Si quieres puedes eliminarlo después:  
           unlink('pruebas/mensaje_encriptado.txt');
+    }
+
+    public function decifrar_msj(){
+        return view('pruebas.desencripta');
+    }
+
+    public function desencriptar_msj(request $request){
+
+        $privKey = $request->file('llave');      
+        $privKey=file_get_contents($privKey);
+
+        $encrypted = $request->file('mensaje');      
+        $encrypted=file_get_contents($encrypted);
+
+        openssl_private_decrypt($encrypted, $decrypted, $privKey);
+
+        file_put_contents("pruebas/mensaje_desencriptado.txt", $decrypted);
+        // El nombre con el que se descarga
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary");
+        header("Content-disposition: attachment; filename=mensaje_desencriptado.txt");
+        // Leer el contenido binario del zip y enviarlo
+        readfile('pruebas/mensaje_desencriptado.txt');
+        // Si quieres puedes eliminarlo después:  
+        unlink('pruebas/mensaje_desencriptado.txt');
+
+    }
+
+    public function firma_digital(){
+        return view('pruebas.firma');
+    }
+
+    public function firmar_digital(request $request){
+
+        $zip = new ZipArchive();
+        $filename = "pruebas/Firma_Digital.zip";
+
+        if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {  
+
+        $privKey = $request->file('llave');      
+        $privKey=file_get_contents($privKey);
+
+        $doc = $request->file('doc');      
+        $hash = $request->get('hash');      
+        $b64Doc = chunk_split(base64_encode(file_get_contents($doc)));
+        $hash=hash('sha256', $b64Doc);
+
+        openssl_sign($hash, $firma, $privKey, OPENSSL_ALGO_SHA1);
+
+        $firma_64 = base64_encode($firma);
+
+        file_put_contents("pruebas/firma.dat", $firma);
+        file_put_contents("pruebas/firma64.txt", $firma_64);
+
+        $zip->addFile("pruebas/firma.dat");
+        $zip->addFile("pruebas/firma64.txt");
+
+        $resultado = $zip->close();
+        if (!$resultado) {
+            exit("Error creando archivo");
+        }
+
+        // El nombre con el que se descarga
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary");
+        header("Content-disposition: attachment; filename=Firma_Digital.zip");
+        // Leer el contenido binario del zip y enviarlo
+        readfile('pruebas/Firma_Digital.zip');
+        // Si quieres puedes eliminarlo después:  
+        unlink('pruebas/Firma_Digital.zip');
+
+
+        
+        }else{
+            echo 'Error creando ' . $filename;
+        }
+        
+    }
+
+    public function verifica_firma(){
+        return view('pruebas.verifica_firmad');
+
+    }
+
+    public function result_ver_firma_dig(request $request){
+        
+        $pubkeyid = $request->file('llave');      
+        $pubkeyid=file_get_contents($pubkeyid);
+
+        $signature = $request->file('firma');      
+        $signature=file_get_contents($signature);
+
+        $data = $request->file('doc');    
+        $b64Doc = chunk_split(base64_encode(file_get_contents($data)));
+        $data=hash('sha256', $b64Doc);  
+
+
+        $ok = openssl_verify($data, $signature, $pubkeyid);
+        if ($ok == 1) {
+            return Redirect::to('welcome')->with('errors', "La firma coincide con el documento");
+        } elseif ($ok == 0) {
+            return Redirect::to('welcome')->with('errors', "La firma no coicide con el documento, fue alterado");
+        } else {
+            return Redirect::to('welcome')->with('errors', "La firma no coicide con el documento, fue alterado: ".openssl_error_string());
+        }
+        // liberar la clave de la memoria
+        //openssl_free_key($pubkeyid);
+        
+        
+    }
+
+    public function autofirmado(){
+        return view('pruebas.autofirmado');
+    }
+
+    public function genera_autofirmado(request $request){
+
+        $dn = array(
+            "countryName" => $request->get('pais_aut'),
+            "stateOrProvinceName" => $request->get('estado_aut'),
+            "localityName" =>$request->get('localidad_aut'),
+            "organizationName" => $request->get('org'),
+            "organizationalUnitName" => $request->get('ou'),
+            "commonName" => $request->get('cn'),
+            "emailAddress" =>  $request->get('email')
+          );
+          $config = array(
+            'config' => 'ssl/openssl.cnf',
+            'encrypt_key' => true,
+            "private_key_bits" => 4096,
+            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+            'digest_alg' => 'sha512'
+          );
+          var_dump( $dn);
+          
+          $privkey  = openssl_pkey_new($config);
+          $csr = openssl_csr_new($dn, $privkey );    
+          $req_cert = openssl_csr_sign($csr, null, $privkey , 730,array('digest_alg'=>'sha256'));
+          openssl_csr_export($csr, $csrout) and var_dump($csrout);
+          openssl_x509_export($req_cert, $certout);
+          openssl_pkey_export($privkey, $pkeyout);
+    
+          openssl_x509_export_to_file($certout, "ssl/cert/".$request->get('email').".cer");
+          openssl_pkey_export_to_file($pkeyout, "ssl/key/".$request->get('email').".key.pri");
+    
+          $pub_key = openssl_pkey_get_public(file_get_contents("ssl/cert/".$request->get('email').".cer"));
+          $keyData = openssl_pkey_get_details($privkey);
+          file_put_contents("ssl/key/".$request->get('email').".key.pub", $keyData['key']);
+
+          $zip = new ZipArchive();
+          $filename = "pruebas/Certificado.zip";
+  
+          if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) { 
+            $zip->addFile("ssl/cert/".$request->get('email').".cer");
+            $zip->addFile("ssl/key/".$request->get('email').".key.pri"); 
+            $zip->addFile("ssl/key/".$request->get('email').".key.pub"); 
+
+            $resultado = $zip->close();
+            if (!$resultado) {
+                exit("Error creando archivo");
+            }
+    
+            // El nombre con el que se descarga
+            header('Content-Type: application/octet-stream');
+            header("Content-Transfer-Encoding: Binary");
+            header("Content-disposition: attachment; filename=Certificado.zip");
+            // Leer el contenido binario del zip y enviarlo
+            readfile('pruebas/Certificado.zip');
+            // Si quieres puedes eliminarlo después:  
+            unlink('pruebas/Certificado.zip');
+    
+
+          }
+
     }
 
     /**
