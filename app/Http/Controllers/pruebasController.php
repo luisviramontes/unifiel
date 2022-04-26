@@ -323,6 +323,75 @@ class pruebasController extends Controller
 
     }
 
+    public function emitido_aut(){
+        return view('pruebas.emitido_aut');
+    }
+
+    public function genera_emitido_aut(request $request){
+
+        $config = array(
+            'config' => 'ssl/openssl.cnf',
+            'encrypt_key' => true,
+            "private_key_bits" => 4096,
+            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+            'digest_alg' => 'sha256'
+          );
+          // $CA_CERT = "ssl/cert/SIJEL.cer";
+          //$CA_KEY  = "ssl/key/SIJEL.key";
+          $CA_CERT = "ssl/cert/Admin@unifiel.org.mx.cer";
+          $CA_KEY  = "ssl/key/Admin@unifiel.org.mx.key";
+          $req_key = openssl_pkey_new($config);
+          //$config = array("config" => "ssl/openssl.cnf");
+          if (openssl_pkey_export($req_key, $out_key)) {
+            $dn = array(
+                "countryName" => "MX",
+                "stateOrProvinceName" => $request->get('estado_aut'),
+                "localityName" =>$request->get('localidad_aut'),
+                "organizationName" => $request->get('org'),
+                "organizationalUnitName" => $request->get('ou'),
+                "commonName" => $request->get('cn'),
+                "emailAddress" =>  $request->get('email')
+              );
+
+            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            //GENERA LA CLAVE ALFANUMERICA PARA LA ASIGNACION
+            $serial = substr(str_shuffle($permitted_chars), 0, 30);
+
+            $req_csr  = openssl_csr_new($dn, $req_key);
+            $req_cert = openssl_csr_sign($req_csr, "file://$CA_CERT", "file://$CA_KEY",  $request->get('tiempo'), array('digest_alg' => 'sha256'), $serial);
+            if (openssl_x509_export($req_cert, $out_cert)) {
+              openssl_x509_export_to_file($out_cert, "ssl/cert/".$request->get('email').".cer");
+              openssl_pkey_export_to_file($out_key, "ssl/key/".$request->get('email').".key.pri");
+              $a_key = openssl_pkey_get_details($req_key);
+              $ClavePublica = $a_key["key"];
+              file_put_contents("ssl/key/".$request->get('email').".key.pub", $ClavePublica);            
+         }}
+
+          $zip = new ZipArchive();
+          $filename = "pruebas/Certificado_Emitido_Autoridad.zip";
+  
+          if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) { 
+            $zip->addFile("ssl/cert/".$request->get('email').".cer");
+            $zip->addFile("ssl/key/".$request->get('email').".key.pri"); 
+            $zip->addFile("ssl/key/".$request->get('email').".key.pub"); 
+
+            $resultado = $zip->close();
+            if (!$resultado) {
+                exit("Error creando archivo");
+            }
+    
+            // El nombre con el que se descarga
+            header('Content-Type: application/octet-stream');
+            header("Content-Transfer-Encoding: Binary");
+            header("Content-disposition: attachment; filename=Certificado_Emitido_Autoridad.zip");
+            // Leer el contenido binario del zip y enviarlo
+            readfile('pruebas/Certificado_Emitido_Autoridad.zip');
+            // Si quieres puedes eliminarlo después:  
+            unlink('pruebas/Certificado_Emitido_Autoridad.zip');
+          }
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

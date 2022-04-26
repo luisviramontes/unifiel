@@ -51,3 +51,5 @@ Route::get('verifica_firma', 'pruebasController@verifica_firma');
 Route::post('result_ver_firma_dig', 'pruebasController@result_ver_firma_dig');
 Route::get('autofirmado', 'pruebasController@autofirmado');
 Route::post('genera_autofirmado', 'pruebasController@genera_autofirmado');
+Route::get('emitido_aut', 'pruebasController@emitido_aut');
+Route::post('genera_emitido_aut', 'pruebasController@genera_emitido_aut');
