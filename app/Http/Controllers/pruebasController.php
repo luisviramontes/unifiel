@@ -33,20 +33,30 @@ class pruebasController extends Controller
         
         // Extraiga la clave privada de $res a $privKey
         openssl_pkey_export($res, $privKey);
+
+        print_r("ESTA ES LA LLAVE PRIVADA*****<BR>".$privKey."<br>");
         
         // Extraiga la clave pública de $res a $pubKey
         $pubKey = openssl_pkey_get_details($res);
         $pubKey = $pubKey["key"];
+
+        print_r("ESTA ES LA LLAVE PUBLICA*****<BR>".$pubKey."<br>");
         
         $data = 'ESTE ES UN EJEMPLO DE CIFRADO ITZ';
+
+        print_r("MENSAJE A CIFRAR*****<BR>".$data."<br>");
         
         // Cifra los datos en la variable $encrypted usando la clave pública
         openssl_public_encrypt($data, $encrypted, $pubKey);
+
+        print_r("MENSAJE CIFRADO*****<BR>".$encrypted."<br>");
         
         // Descifrar los datos usando la clave privada y almacena los resultados en $decrypted
         openssl_private_decrypt($encrypted, $decrypted, $privKey);
+
+        print_r("MENSAJE DECIFRADO MEDIANTE CLAVE PRIVADA*****<BR>".$decrypted."<br>");
         
-        echo $decrypted;
+      //  echo $decrypted;
         //
     }
 
