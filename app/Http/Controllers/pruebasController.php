@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use ZipArchive;
 use App\autoridadesCertModel;
+use DB;
 
 class pruebasController extends Controller
 {
