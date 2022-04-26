@@ -41,3 +41,5 @@ Route::get('validar_autoridad/{id}','autoridadesCertController@validar_autoridad
 Route::get('priv_pub', 'pruebasController@priv_pub');
 Route::post('generar_claves', 'pruebasController@generar_claves');
 Route::get('crear_claves_priv_pub', 'pruebasController@crear_claves_priv_pub');
+Route::get('encriptar_msj', 'pruebasController@encriptar_msj');
+Route::post('cifrar_msj', 'pruebasController@cifrar_msj');

@@ -126,6 +126,28 @@ class pruebasController extends Controller
 
     }
 
+    public function encriptar_msj(){
+        return view('pruebas.encripta');
+
+    }
+
+    public function cifrar_msj(request $request){
+        $data = $request->get('mensaje');  
+        $pubKey = $request->file('llave');          
+        // Cifra los datos en la variable $encrypted usando la clave pública
+        openssl_public_encrypt($data, $encrypted, $pubKey);
+
+        file_put_contents("pruebas/mensaje_encriptado.txt", $encrypted);
+          // El nombre con el que se descarga
+          header('Content-Type: application/octet-stream');
+          header("Content-Transfer-Encoding: Binary");
+          header("Content-disposition: attachment; filename=mensaje_encriptado.txt");
+          // Leer el contenido binario del zip y enviarlo
+          readfile('pruebas/mensaje_encriptado.txt');
+          // Si quieres puedes eliminarlo después:  
+          unlink('pruebas/mensaje_encriptado.txt');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
