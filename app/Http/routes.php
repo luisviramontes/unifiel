@@ -38,4 +38,5 @@ Route::resource('autoridades_certificadoras', 'autoridadesCertController');
 Route::get('validar_autoridad/{id}','autoridadesCertController@validar_autoridad');
 
 //pruebas openssl
+Route::get('priv_pub', 'pruebasController@priv_pub');
 Route::get('crear_claves_priv_pub', 'pruebasController@crear_claves_priv_pub');
