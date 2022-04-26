@@ -10,8 +10,9 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    {!!Html::style('assets/img/favicon.png')!!}
-    {!!Html::style('assets/img/apple-touch-icon.png')!!}
+    {!!Html::style('welcome_i/assets/img/3.png')!!}
+    {!!Html::style('awelcome_i/assets/img/3.png')!!}
+
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
