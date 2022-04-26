@@ -11,10 +11,11 @@
 </div><!-- End Page Title -->
 
 <section class="section">
-    <form action="/generar_claves" id="form" class="row g-12">
+    <form action="/generar_claves" id="form" method="post" files="true" enctype="multipart/form-data" class="row g-12">
+        {{csrf_field()}}
         <div class="card">
             <div class="card-body">
-            <h5 class="card-title">Crear llave privada y pública</h5>
+                <h5 class="card-title">Crear llave privada y pública</h5>
                 <div class="col-md-12 mt-4">
                     <label for="validationCustom04" class="form-label">Seleccione el tipo de función HASH <span
                             class="text-danger">*</span></label>
