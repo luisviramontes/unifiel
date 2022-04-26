@@ -284,7 +284,7 @@ class pruebasController extends Controller
           
           $privkey  = openssl_pkey_new($config);
           $csr = openssl_csr_new($dn, $privkey );    
-          $req_cert = openssl_csr_sign($csr, null, $privkey , 730,array('digest_alg'=>'sha256'));
+          $req_cert = openssl_csr_sign($csr, null, $privkey , $request->get('tiempo'),array('digest_alg'=>'sha256'));
           openssl_csr_export($csr, $csrout) and var_dump($csrout);
           openssl_x509_export($req_cert, $certout);
           openssl_pkey_export($privkey, $pkeyout);

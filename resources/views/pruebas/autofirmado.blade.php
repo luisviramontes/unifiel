@@ -11,7 +11,8 @@
 </div><!-- End Page Title -->
 
 <section class="section">
-    <form action="/genera_autofirmado" id="form" method="post" files="true" enctype="multipart/form-data" class="row g-12">
+    <form action="/genera_autofirmado" id="form" method="post" files="true" enctype="multipart/form-data"
+        class="row g-12">
         {{csrf_field()}}
         <div class="card">
             <div class="card-body">
@@ -52,12 +53,10 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="validationCustom03" class="form-label">Email<span
-                            class="text-danger">*</span> </label>
+                    <label for="validationCustom03" class="form-label">Email<span class="text-danger">*</span> </label>
                     <input type="text"
                         onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
-                        class="form-control" placeholder="Favor de ingresar el email"
-                        id="email" name="email">
+                        class="form-control" placeholder="Favor de ingresar el email" id="email" name="email">
                 </div>
 
                 <div class="col-md-6">
@@ -86,8 +85,13 @@
                 <div class="col-md-6">
                     <label for="validationCustom04" class="form-label">Nombre del país (C)<span
                             class="text-danger">*</span></label>
-                    <select class="form-select" id="pais_aut" name="pais_aut" required>
-                    </select>
+
+                    <input type="text"
+                        onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
+                        class="form-control" maxlength="2" placeholder="Favor de ingresar el pais" id="pais"
+                        name="pais">
+
+
                 </div>
 
                 <div class="col-md-6">
@@ -95,9 +99,9 @@
                         Seguridad <span class="text-danger">*</span></label>
                     <select class="form-select" id="tiempo" name="tiempo" required>
                         <option selected disabled value="">Seleccione una opción</option>
-                        <option value="1">1 AÑO</option>
-                        <option value="2">2 AÑOS</option>
-                        <option value="3">3 AÑOS</option>
+                        <option value="365">365 Días</option>
+                        <option value="770">770 Días</option>
+                        <option value="1135">1135 Días</option>
                     </select>
                 </div>
 
