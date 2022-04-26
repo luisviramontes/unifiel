@@ -89,25 +89,25 @@ class pruebasController extends Controller
         $pubKey = $pubKey["key"];
 
         print_r("ESTA ES LA LLAVE PUBLICA*****<BR>".$pubKey."<br>");
-        file_put_contents("/unifiel.key.pub", $pubKey);
+        file_put_contents("pruebas/unifiel.key.pub", $pubKey);
         // El nombre con el que se descarga
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary");
         header("Content-disposition: attachment; filename=unifiel.key.pub");
         // Leer el contenido binario del zip y enviarlo
-        readfile('/unifiel.key.pub');
+        readfile('pruebas/unifiel.key.pub');
         // Si quieres puedes eliminarlo después:
-        unlink('/unifiel.key.pub');
+        unlink('pruebas/unifiel.key.pub');
 
-        file_put_contents("/unifiel.key.pri", $privKey);
+        file_put_contents("pruebas/unifiel.key.pri", $privKey);
         // El nombre con el que se descarga
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary");
         header("Content-disposition: attachment; filename=unifiel.key.pri");
         // Leer el contenido binario del zip y enviarlo
-        readfile('/unifiel.key.pri');
+        readfile('pruebas/unifiel.key.pri');
         // Si quieres puedes eliminarlo después:  
-        unlink('/unifiel.key.pri');
+        unlink('pruebas/unifiel.key.pri');
 
         return Redirect::to('welcome');
         

@@ -19,7 +19,7 @@
                 <div class="col-md-12 mt-4">
                     <label for="validationCustom04" class="form-label">Seleccione el tipo de función HASH <span
                             class="text-danger">*</span></label>
-                    <select class="form-select" id="hash" name="hash">
+                    <select class="form-select" required id="hash" name="hash">
                         <option selected disabled value="">Seleccione una opción</option>
                         <option value="sha512">sha512</option>
                         <option value="sha224">sha224</option>
@@ -31,7 +31,7 @@
                 <div class="col-md-12 mt-4">
                     <label for="validationCustom04" class="form-label">Tamaño de la clave bits <span
                             class="text-danger">*</span></label>
-                    <select class="form-select" id="tamaño" name="tamaño">
+                    <select required class="form-select" id="tamaño" name="tamaño">
                         <option selected disabled value="">Seleccione una opción</option>
                         <option value="4096">4096</option>
                         <option value="2000">2000</option>
@@ -43,7 +43,7 @@
                 <div class="col-md-12 mt-4">
                     <label for="validationCustom04" class="form-label">Tipo de clave privada a crear<span
                             class="text-danger">*</span></label>
-                    <select class="form-select" id="privada" name="privada">
+                    <select required class="form-select" id="privada" name="privada">
                         <option selected disabled value="">Seleccione una opción</option>
                         <option value="OPENSSL_KEYTYPE_RSA">OPENSSL_KEYTYPE_RSA</option>
                         <option value="OPENSSL_KEYTYPE_EC">OPENSSL_KEYTYPE_EC</option>
