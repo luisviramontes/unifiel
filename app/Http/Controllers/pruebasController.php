@@ -80,7 +80,7 @@ class pruebasController extends Controller
   
         $name_zip = "Llaves.zip";
         //$filename = 'COMPRIMIDOS/' . $name_zip;
-        $filename = "pruebas/".$name_zip;
+        $filename = "/pruebas/".$name_zip;
 
         if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {  
         // Crear la clave pública y privada
@@ -96,8 +96,8 @@ class pruebasController extends Controller
     
         file_put_contents("pruebas/unifiel.key.pub", $pubKey);
         file_put_contents("pruebas/unifiel.key.pri", $privKey);
-        $zip->addFile("pruebas/unifiel.key.pub");
-        $zip->addFile("pruebas/unifiel.key.pri");
+        $zip->addFile("/pruebas/unifiel.key.pub");
+        $zip->addFile("/pruebas/unifiel.key.pri");
 
         $resultado = $zip->close();
         if (!$resultado) {
