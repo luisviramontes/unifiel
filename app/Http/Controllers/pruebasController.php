@@ -80,7 +80,7 @@ class pruebasController extends Controller
   
         $name_zip = "Llaves.zip";
         //$filename = 'COMPRIMIDOS/' . $name_zip;
-        $filename = public_path(). "/pruebas/".$name_zip;
+        $filename = "/pruebas/".$name_zip;
 
         if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {  
         // Crear la clave pública y privada
@@ -99,6 +99,12 @@ class pruebasController extends Controller
         $zip->addFile("pruebas/unifiel.key.pub");
         $zip->addFile("pruebas/unifiel.key.pri");
 
+        $resultado = $zip->close();
+        if (!$resultado) {
+            exit("Error creando archivo");
+        }
+
+
         // El nombre con el que se descarga
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary");
@@ -107,9 +113,12 @@ class pruebasController extends Controller
         readfile($filename);
         // Si quieres puedes eliminarlo después:  
         unlink($filename);
-        }
-
         return Redirect::to('welcome');
+        }else {
+          echo 'Error creando ' . $filename;
+          return Redirect::to('welcome')->with('errors', 'Error al crear el zip ');
+        }
+       
         
       
 
