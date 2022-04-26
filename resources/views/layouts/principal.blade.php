@@ -352,8 +352,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Data Tables</span>
+                        <a href="emitido_aut">
+                            <i class="bi bi-circle"></i><span>Emitido por autoridad</span>
                         </a>
                     </li>
                 </ul>

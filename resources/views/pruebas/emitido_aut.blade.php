@@ -11,7 +11,7 @@
 </div><!-- End Page Title -->
 
 <section class="section">
-    <form action="/genera_autofirmado" id="form" method="post" files="true" enctype="multipart/form-data"
+    <form action="/genera_emitido_aut" id="form" method="post" files="true" enctype="multipart/form-data"
         class="row g-12">
         {{csrf_field()}}
         <div class="card">
