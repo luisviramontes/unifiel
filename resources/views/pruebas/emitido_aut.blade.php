@@ -18,6 +18,19 @@
             <div class="card-body">
                 <h5 class="card-title">Generar certificado emitido por Autoridad Certificadora(AC)</h5>
 
+
+                <div class="col-md-6">
+                    <label for="validationCustom04" class="form-label">Seleccione la Autoridad Certificadora <span class="text-danger">*</span></label>
+                    <select class="form-select" id="aut" name="aut" required>
+                        <option selected disabled value="">Seleccione una opción</option>
+                        @foreach($autoridades as $aut)
+                        <option value="{{$aut->id}}">{{$aut->cn}}</option>
+                        @endforeach
+                        
+                    </select>
+                </div>
+
+
                 <div class="col-md-12">
                     <label for="validationCustom03" class="form-label">Nombre común (CN)<span
                             class="text-danger">*</span>

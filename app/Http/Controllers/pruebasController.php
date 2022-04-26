@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use ZipArchive;
+use App\autoridadesCertModel;
 
 class pruebasController extends Controller
 {
@@ -264,6 +265,10 @@ class pruebasController extends Controller
 
     public function genera_autofirmado(request $request){
 
+
+       
+
+
         $dn = array(
             "countryName" => "MX",
             "stateOrProvinceName" => $request->get('estado_aut'),
@@ -296,6 +301,23 @@ class pruebasController extends Controller
           $keyData = openssl_pkey_get_details($privkey);
           file_put_contents("ssl/key/".$request->get('email').".key.pub", $keyData['key']);
 
+          $user=Auth::user();
+          $autoridad= new autoridadesCertModel;
+          $autoridad->cn=$request->get('cn');
+          $autoridad->ou=$request->get('ou');
+          $autoridad->org=$request->get('org');
+          $autoridad->loc=$request->get('localidad_aut');
+          $autoridad->sta=$request->get('estado_aut');
+          $autoridad->coun='MX';
+          $autoridad->years= $request->get('tiempo');
+          $autoridad->estado="ACTIVO";
+          $autoridad->cert=$request->get('email').".cer";
+          $autoridad->key=$request->get('email').".key.pri";
+          $autoridad->id_user=$user->id;
+          $autoridad->captura=$user->name." ".$user->apellido_p." ".$user->apellido_m;
+          $autoridad->save();
+
+
           $zip = new ZipArchive();
           $filename = "pruebas/Certificado.zip";
   
@@ -324,7 +346,8 @@ class pruebasController extends Controller
     }
 
     public function emitido_aut(){
-        return view('pruebas.emitido_aut');
+        $autoridades=DB::table('autoridades_cert')->where('estado','=','ACTIVO')->get();
+        return view('pruebas.emitido_aut',['autoridades'=>$autoridades]);
     }
 
     public function genera_emitido_aut(request $request){
@@ -338,8 +361,10 @@ class pruebasController extends Controller
           );
           // $CA_CERT = "ssl/cert/SIJEL.cer";
           //$CA_KEY  = "ssl/key/SIJEL.key";
-          $CA_CERT = "ssl/cert/Admin@unifiel.org.mx.cer";
-          $CA_KEY  = "ssl/key/Admin@unifiel.org.mx.key";
+          $aut=$request->get('aut');
+          $autoridad=DB::table('autoridades_cert')->where('id','=',$aut)->first();
+          $CA_CERT = "ssl/cert/".$autoridad->cert;
+          $CA_KEY  = "ssl/key/".$autoridad->key;
           $req_key = openssl_pkey_new($config);
           //$config = array("config" => "ssl/openssl.cnf");
           if (openssl_pkey_export($req_key, $out_key)) {
@@ -355,7 +380,7 @@ class pruebasController extends Controller
 
             $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             //GENERA LA CLAVE ALFANUMERICA PARA LA ASIGNACION
-            $serial = substr(str_shuffle($permitted_chars), 0, 30);
+            $serial = substr(str_shuffle($permitted_chars), 0, 6);
 
             $req_csr  = openssl_csr_new($dn, $req_key);
             $req_cert = openssl_csr_sign($req_csr, "file://$CA_CERT", "file://$CA_KEY",  $request->get('tiempo'), array('digest_alg' => 'sha256'), $serial);
