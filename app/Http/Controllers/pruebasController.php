@@ -80,7 +80,7 @@ class pruebasController extends Controller
   
         $name_zip = "Llaves.zip";
         //$filename = 'COMPRIMIDOS/' . $name_zip;
-        $filename = "/pruebas/".$name_zip;
+        $filename = "pruebas/Llaves.zip.";
 
         if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {  
         // Crear la clave pública y privada
