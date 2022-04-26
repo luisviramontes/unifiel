@@ -379,9 +379,9 @@ class pruebasController extends Controller
                 "emailAddress" =>  $request->get('email')
               );
 
-            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $permitted_chars = '0123456789';
             //GENERA LA CLAVE ALFANUMERICA PARA LA ASIGNACION
-            $serial = substr(str_shuffle($permitted_chars), 0, 6);
+            $serial = substr(str_shuffle($permitted_chars), 0, 5);
 
             $req_csr  = openssl_csr_new($dn, $req_key);
             $req_cert = openssl_csr_sign($req_csr, "file://$CA_CERT", "file://$CA_KEY",  $request->get('tiempo'), array('digest_alg' => 'sha256'), $serial);

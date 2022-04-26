@@ -19,7 +19,7 @@
                 <h5 class="card-title">Generar certificado emitido por Autoridad Certificadora(AC)</h5>
 
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom04" class="form-label">Seleccione la Autoridad Certificadora <span class="text-danger">*</span></label>
                     <select class="form-select" id="aut" name="aut" required>
                         <option selected disabled value="">Seleccione una opción</option>
@@ -31,7 +31,7 @@
                 </div>
 
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <label for="validationCustom03" class="form-label">Nombre común (CN)<span
                             class="text-danger">*</span>
                     </label>
@@ -46,7 +46,7 @@
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom03" class="form-label">Unidad Organizacional (OU)<span
                             class="text-danger">*</span> </label>
                     <input type="text"
@@ -55,7 +55,7 @@
                         id="ou" name="ou">
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom03" class="form-label">Organización (O)<span
                             class="text-danger">*</span>
                     </label>
@@ -65,14 +65,14 @@
                         name="org">
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom03" class="form-label">Email<span class="text-danger">*</span> </label>
                     <input type="text"
                         onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
                         class="form-control" placeholder="Favor de ingresar el email" id="email" name="email">
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom03" class="form-label">Codigó postal <span class="text-danger">*</span>
                     </label>
                     <input maxlength="5" minlength="5" type="text" placeholder="Favor de ingresar el codigó postal"
@@ -81,21 +81,21 @@
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom04" class="form-label">Localidad (L)<span
                             class="text-danger">*</span></label>
                     <select class="form-select" id="localidad_aut" name="localidad_aut" required>
                     </select>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom04" class="form-label">Nombre del estado o provincia (S) <span
                             class="text-danger">*</span></label>
                     <select class="form-select" id="estado_aut" name="estado_aut" required>
                     </select>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom04" class="form-label">Nombre del país (C)<span
                             class="text-danger">*</span></label>
 
@@ -107,7 +107,7 @@
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-4">
                     <label for="validationCustom04" class="form-label">Tiempo de duración de los Certificados de
                         Seguridad <span class="text-danger">*</span></label>
                     <select class="form-select" id="tiempo" name="tiempo" required>
