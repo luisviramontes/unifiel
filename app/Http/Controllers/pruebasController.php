@@ -115,7 +115,7 @@ class pruebasController extends Controller
         readfile($filename);
         // Si quieres puedes eliminarlo después:  
         unlink($filename);
-        return Redirect::to('welcome');
+        //return Redirect::to('welcome');
         }else {
           echo 'Error creando ' . $filename;
          // return Redirect::to('welcome')->with('errors', 'Error al crear el zip ');
