@@ -68,6 +68,8 @@ class pruebasController extends Controller
     }
 
     public function generar_claves(request $request){
+        $zip = new ZipArchive();
+
         //pruebas ITZ Criptografia asimetrica openssl
         $config = array(
             "digest_alg" => $request->get('hash'),
@@ -76,38 +78,36 @@ class pruebasController extends Controller
         );
            
   
+        $name_zip = "Llaves.zip";
+        //$filename = 'COMPRIMIDOS/' . $name_zip;
+        $filename = public_path(). "/pruebas/".$name_zip;
+
+        if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {  
         // Crear la clave pública y privada
         $res = openssl_pkey_new($config);
         
         // Extraiga la clave privada de $res a $privKey
         openssl_pkey_export($res, $privKey);
-
-        print_r("ESTA ES LA LLAVE PRIVADA*****<BR>".$privKey."<br>");
         
         // Extraiga la clave pública de $res a $pubKey
         $pubKey = openssl_pkey_get_details($res);
         $pubKey = $pubKey["key"];
 
-        print_r("ESTA ES LA LLAVE PUBLICA*****<BR>".$pubKey."<br>");
+    
         file_put_contents("pruebas/unifiel.key.pub", $pubKey);
-        // El nombre con el que se descarga
-        header('Content-Type: application/octet-stream');
-        header("Content-Transfer-Encoding: Binary");
-        header("Content-disposition: attachment; filename=unifiel.key.pub");
-        // Leer el contenido binario del zip y enviarlo
-        readfile('pruebas/unifiel.key.pub');
-        // Si quieres puedes eliminarlo después:
-        unlink('pruebas/unifiel.key.pub');
-
         file_put_contents("pruebas/unifiel.key.pri", $privKey);
+        $zip->addFile("pruebas/unifiel.key.pub");
+        $zip->addFile("pruebas/unifiel.key.pri");
+
         // El nombre con el que se descarga
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary");
-        header("Content-disposition: attachment; filename=unifiel.key.pri");
+        header("Content-disposition: attachment; filename=unifiel.zip");
         // Leer el contenido binario del zip y enviarlo
-        readfile('pruebas/unifiel.key.pri');
+        readfile($filename);
         // Si quieres puedes eliminarlo después:  
-        unlink('pruebas/unifiel.key.pri');
+        unlink($filename);
+        }
 
         return Redirect::to('welcome');
         
