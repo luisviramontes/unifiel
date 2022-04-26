@@ -23,11 +23,9 @@
                             DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to
                         conver to a datatable</p>
 
-
-
                     <!-- Table with stripped rows -->
-                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap"
-                        style="width:100%">
+                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border:1; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
                                 <th>Nombre de la AC</th>
@@ -37,7 +35,7 @@
                                 <th>Loc</th>
                                 <th>Estado</th>
                                 <th>Pais</th>
-                                <th>Estado de la certificacion</th>                               
+                                <th>Estado de la certificacion</th>
                                 <th>Ver</th>
                             </tr>
                         </thead>
@@ -53,7 +51,11 @@
                                 <td>{{$aut->sta}}</td>
                                 <td>{{$aut->coun}}</td>
                                 <td>{{$aut->estado}}</td>
-                                <td>{{$aut->estado}}</td>
+                                <td>
+                                    <a href="{{URL::action('autoridadesCertController@show',$aut->id)}}"
+                                        class="btn waves-effect waves-light btn-info" role="button">
+                                        <i class="mdi mdi-eye"></i></a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -65,10 +67,4 @@
         </div>
     </div>
 </section>
-
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-});
-</script>
 @endsection

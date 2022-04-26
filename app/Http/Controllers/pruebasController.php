@@ -6,24 +6,47 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use DB;
-use App\autoridadesCertModel;
-use App\User;
+use Illuminate\Support\Facades\Auth;
 
-class autoridadesCertController extends Controller
+class pruebasController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function crear_claves_priv_pub()
     {
-        $autoridades=DB::table('autoridades_cert')->join('users','users.id','=','autoridades_cert.id_user')
-        ->select('users.name','users.apellido_p','users.apellido_m','users.razon_social','autoridades_cert.*')
-        ->get();
-
-        return view('autoridades_cert.index',['autoridades'=>$autoridades]);
+        //pruebas ITZ Criptografia asimetrica openssl
+        $config = array(
+            "digest_alg" => "sha512",
+            "private_key_bits" => 4096,
+            "private_key_type" => OPENSSL_KEYTYPE_RSA,
+        );
+           
+        // Crear la clave pública y privada
+        $res = openssl_pkey_new($config);
+        
+        // Extraiga la clave privada de $res a $privKey
+        openssl_pkey_export($res, $privKey);
+        
+        // Extraiga la clave pública de $res a $pubKey
+        $pubKey = openssl_pkey_get_details($res);
+        $pubKey = $pubKey["key"];
+        
+        $data = 'ESTE ES UN EJEMPLO DE CIFRADO ITZ';
+        
+        // Cifra los datos en la variable $encrypted usando la clave pública
+        openssl_public_encrypt($data, $encrypted, $pubKey);
+        
+        // Descifrar los datos usando la clave privada y almacena los resultados en $decrypted
+        openssl_private_decrypt($encrypted, $decrypted, $privKey);
+        
+        echo $decrypted;
         //
     }
 
@@ -56,17 +79,7 @@ class autoridadesCertController extends Controller
      */
     public function show($id)
     {
-    $autoridad=autoridadesCertModel::findOrFail($id);
-
-    return view('autoridades_cert.detalle',['autoridad'=>$autoridad]);
         //
-    }
-
-    public function validar_autoridad($id){
-
-        $autoridad=autoridadesCertModel::findOrFail($id);
-        return view('autoridades_cert.validar',['autoridad'=>$autoridad]);
-
     }
 
     /**
@@ -77,19 +90,6 @@ class autoridadesCertController extends Controller
      */
     public function edit($id)
     {
-        $autoridad=autoridadesCertModel::findOrFail($id);
-        if($autoridad){
-
-            $user=User::findOrFail($autoridad->id_user);
-            $documentos=DB::table('documentacion_user')->where('id_user','=',$user->id)->get();
-            $domicilio=DB::table('domicilios_user')->where('id_user','=',$user->id)->first();
-
-            return view('autoridades_cert.edit',['autoridad'=>$autoridad,'user'=>$user,'documentos'=>$documentos,'domicilio'=>$domicilio]);
-        }else{
-
-        }
-        
-
         //
     }
 

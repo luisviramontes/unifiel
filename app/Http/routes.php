@@ -35,3 +35,7 @@ Route::get('autofirmado','firmaElectronicaController@autofirmado');
 
 //autoridades_certificadoras
 Route::resource('autoridades_certificadoras', 'autoridadesCertController');
+Route::get('validar_autoridad/{id}','autoridadesCertController@validar_autoridad');
+
+//pruebas openssl
+Route::get('crear_claves_priv_pub', 'autoridadesCertController@crear_claves_priv_pub');
