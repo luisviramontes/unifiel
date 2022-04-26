@@ -265,7 +265,7 @@ class pruebasController extends Controller
     public function genera_autofirmado(request $request){
 
         $dn = array(
-            "countryName" => $request->get('pais_aut'),
+            "countryName" => "MX",
             "stateOrProvinceName" => $request->get('estado_aut'),
             "localityName" =>$request->get('localidad_aut'),
             "organizationName" => $request->get('org'),
