@@ -12,6 +12,9 @@
     <!-- Favicons -->
     <link href="welcome_i/assets/img/3.png" rel="icon">
     <link href="welcome_i/assets/img/3.png" rel="apple-touch-icon">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320696719214343"
+     crossorigin="anonymous"></script>
 
     <!-- Google Fonts -->
     <link
