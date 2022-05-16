@@ -13,7 +13,7 @@ use App\autoridadesCertModel;
 use DB;
 
 class pruebasController extends Controller
-{
+{  
     public function __construct()
     {
       $this->middleware('auth');
