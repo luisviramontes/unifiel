@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use ZipArchive;
 use App\autoridadesCertModel;
 use DB;
+use Mail;
+
 
 class pruebasController extends Controller
 {  
@@ -415,6 +417,32 @@ class pruebasController extends Controller
             // Si quieres puedes eliminarlo después:  
             unlink('pruebas/Certificado_Emitido_Autoridad.zip');
           }
+
+    }
+
+    public function pruebas(){
+        $user = Auth::user();
+
+        $b64Doc = chunk_split(base64_encode($user->id));
+        $hash=hash('sha256', $b64Doc);      
+
+
+            //code...
+            $cuerpo_email='<p>Bienvenido a UNIFIEL Tu Firma Electrónica en un soló sitio
+            , para continuar con la activación de tu cuenta, por favor da click en el siguiente enlace:<p><br>
+            <p style="text-align:center"><span style="font-size:12px"><span style="font-family:Calibri,sans-serif"><a href="https://www.unifiel.com.mx/activar_cuenta/'.$hash.'" style="color:#0563c1; text-decoration:underline"><strong>https://www.unifiel.com.mx/activar_cuenta/'.$hash.'</strong></a></span></span></p>
+            ';
+            \Mail::send('mail',['cuerpo_email'=>$cuerpo_email], function ($message) use ($user)
+            {
+              //remitente
+              // $message->to($correo->email, 'AVISO ELECTRÓNICO DE NOTIFICACIÓN')->subject('AVISO ELECTRÓNICO DE NOTIFICACIÓN');
+              $message->to('luis_alfonso133@hotmail.com', 'CORFIRMA TU CUENTA')
+                  ->subject('CORREO DE CONFIRMACIÓN');
+              //asunto
+              $message->from('notificaciones@unifiel.com.mx');
+              //receptor                               
+            });
+    
 
     }
 

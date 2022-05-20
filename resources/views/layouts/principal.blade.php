@@ -357,6 +357,9 @@
 
     <main id="main" class="main">
 
+
+
+        <div class="content">
         @if(Session::has('errors'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <i class="bi bi-exclamation-triangle me-1"></i>
@@ -364,8 +367,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
-
-        <div class="content">
             @yield('contenido')
         </div>
     </main><!-- End #main -->

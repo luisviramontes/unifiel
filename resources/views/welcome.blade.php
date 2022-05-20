@@ -10,8 +10,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="welcome_i/assets/img/3.png" rel="icon">
-    <link href="welcome_i/assets/img/3.png" rel="apple-touch-icon">
+    <link href="welcome_i/assets/img/logo_azul.png" rel="icon">
+    <link href="welcome_i/assets/img/logo_azul.png" rel="apple-touch-icon">
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320696719214343"
      crossorigin="anonymous"></script>
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
-                    <img src="welcome_i/assets/img/3.png" class="img-fluid animated" alt="">
+                    <img src="welcome_i/assets/img/logo_azul.png" class="img-fluid animated" alt="">
                 </div>
             </div>
         </div>
